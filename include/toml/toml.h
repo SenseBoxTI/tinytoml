@@ -893,7 +893,7 @@ inline Token Lexer::parseAsTime(const std::string& str)
         t.tm_mday = DD;
         t.tm_mon = MM - 1;
         t.tm_year = YYYY - 1900;
-        auto tp = std::chrono::system_clock::from_time_t(timegm(&t));
+        auto tp = std::chrono::system_clock::from_time_t(mktime(&t));
         return Token(TokenType::TIME, tp);
     }
 
@@ -919,7 +919,7 @@ inline Token Lexer::parseAsTime(const std::string& str)
     t.tm_mday = DD;
     t.tm_mon = MM - 1;
     t.tm_year = YYYY - 1900;
-    auto tp = std::chrono::system_clock::from_time_t(timegm(&t));
+    auto tp = std::chrono::system_clock::from_time_t(mktime(&t));
     ss -= static_cast<int>(ss);
     // TODO(mayah): workaround GCC 4.9.3 on cygwin does not have std::round, but round().
     tp += std::chrono::microseconds(static_cast<std::int64_t>(round(ss * 1000000)));
